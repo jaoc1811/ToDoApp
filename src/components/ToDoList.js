@@ -1,7 +1,11 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { DoneTableHead } from './DoneTableHead'
+
+// Components 
+import { TableHead } from './TableHead'
 import { ToDo } from './ToDo'
-import {ToDoCreator} from './ToDoCreator'
+import { ToDoCreator } from './ToDoCreator'
 
 
 export const ToDoList = () => {
@@ -9,28 +13,78 @@ export const ToDoList = () => {
 
   const toDoItems = useSelector(state => state.toDoItemsReducer)
 
-  const toDoRows = () => (
-    toDoItems.map(todo => (
-      <ToDo todo={todo} />
+  const deleteList = useSelector(state => state.deleteListReducer)
+
+  const dateRange = useSelector(state => state.dateRangeReducer)
+
+  const favoriteCheck = useSelector(state => state.favoriteCheckReducer)
+
+  const dispatch = useDispatch()
+
+  const toDoRows = () => {
+
+    let rows = toDoItems
+
+    if (dateRange.startDate !== null && dateRange.endDate !== null) {
+      rows = rows.filter(todo => todo.date >= dateRange.startDate && todo.date <= dateRange.endDate)
+    }
+    if (favoriteCheck) {
+      rows = rows.filter(todo => todo.favorite === true)
+    }
+    return rows.filter(todo => todo.done === false).map(todo => (
+      <ToDo key={todo.content} todo={todo} favorite={false} />
+    ))
+  }
+
+  const doneToDoRows = () => (
+    toDoItems.filter(todo => todo.done === true).map(todo => (
+      <ToDo key={todo.content} todo={todo} favorite={false} />
     ))
   )
+
+  const deleteToDos = () => {
+    dispatch({ type: 'DELETE', payload: deleteList })
+    dispatch({ type: 'DELETE/RESTART' })
+    dispatch({
+      type: 'SHOW', payload: {
+        show: true,
+        head: 'To-do deleted succefully',
+        body: '',
+        variant: 'success'
+      }
+    })
+  }
+
 
   return (
     <div>
       <ToDoCreator />
-      <table className='table table-striped table-bordered'>
-        <thead>
-          <tr>
-            <th style={{width: '45%'}}>Description</th>
-            <th style={{width: '45%'}}>Date</th>
-            <th className='mx-auto' style={{width: '5%'}}>Favorite</th>
-            <th className='mx-auto' style={{width: '5%'}}>Done</th>
-          </tr>
-        </thead>
-        <tbody>
-          {toDoRows()}
-        </tbody>
-      </table>
+      <h1>To-do list</h1>
+      <div className='table-responsive'>
+        <table className='table table-bordered'>
+          <thead>
+            <TableHead favorite={false} />
+          </thead>
+          <tbody>
+            {toDoRows()}
+          </tbody>
+        </table>
+      </div>
+      <h1>Done list</h1>
+      <div className='table-responsive'>
+        <table className='table table-bordered'>
+          <thead>
+            <DoneTableHead favorite={false} />
+          </thead>
+          <tbody>
+            {doneToDoRows()}
+          </tbody>
+        </table>
+      </div>
+      {deleteList.length > 0 && (
+        <button className='btn btn-danger ml-3' onClick={deleteToDos}>
+          Delete
+        </button>)}
     </div>
   )
 }
