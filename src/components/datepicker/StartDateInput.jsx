@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // Class created because customInput from react datepicker throws and error with sfc
+// Render a button for the datePicker input
 
 // eslint-disable-next-line react/prefer-stateless-function
 export default class StartDateInput extends Component {

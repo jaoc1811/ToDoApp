@@ -1,3 +1,7 @@
+/**
+ * Handles toDoItemsReducer state and actions, used to store all the todos
+ * added in the app
+ */
 const toDoItemsReducer = (state = [], action) => {
   switch (action.type) {
     case 'SET':

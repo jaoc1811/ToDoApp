@@ -2,6 +2,9 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+/**
+ * Render App's Header
+ */
 const Header = () => (
   <Navbar bg="primary" variant="dark" expand="lg">
     <div className="container">

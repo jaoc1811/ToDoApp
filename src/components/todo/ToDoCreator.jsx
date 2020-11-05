@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+/**
+ * Render todo creator form
+ */
 const ToDoCreator = () => {
   const [newToDoContent, setNewToDoContent] = useState('');
 

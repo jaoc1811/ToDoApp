@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Render head of done todos table
+ * @param {*} props
+ */
 const DoneTableHead = (props) => {
   const { favorite } = props;
 
@@ -18,7 +22,7 @@ const DoneTableHead = (props) => {
 };
 
 DoneTableHead.propTypes = {
-  favorite: PropTypes.bool.isRequired,
+  favorite: PropTypes.bool.isRequired, // Boolean used to show actions only in the all todo list
 };
 
 export default DoneTableHead;

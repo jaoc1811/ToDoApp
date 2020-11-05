@@ -1,3 +1,7 @@
+/**
+ * Handles deleteListReducer state and actions, used for the list
+ * of items that will be removed from toDoItems
+ */
 const deleteListReducer = (state = [], action) => {
   switch (action.type) {
     case 'DELETE-INSERT':

@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+/**
+ * Render the row that contains the todo
+ * @param {*} props
+ */
 const ToDo = (props) => {
   const { favorite, todo } = props;
 
+  // State used to show edit form
   const [edit, setEdit] = useState(false);
 
   const [newToDoContent, setNewToDoContent] = useState(todo.content);
@@ -71,6 +76,9 @@ const ToDo = (props) => {
     setEdit(!edit)
   );
 
+  /**
+   * Render an edit icon, that changes if todo is being edited
+   */
   const showEdit = () => (
     edit ? <i className="fas fa-edit text-info" style={{ cursor: 'pointer' }} onClick={handleEdit} />
       : <i className="fas fa-edit" style={{ cursor: 'pointer' }} onClick={handleEdit} />
@@ -78,6 +86,9 @@ const ToDo = (props) => {
 
   const updateNewToDoValue = (e) => setNewToDoContent(e.target.value);
 
+  /**
+   * Render a delete icon, that changes if todo will be deleted
+   */
   const showDelete = () => (
     deleteList.some((e) => e.content === props.todo.content)
       ? <i className="fas fa-trash-alt text-danger" style={{ cursor: 'pointer' }} onClick={removeFromDeleteList} />
@@ -121,11 +132,12 @@ const ToDo = (props) => {
 
 ToDo.propTypes = {
   todo: PropTypes.shape({
-    content: PropTypes.string.isRequired,
-    favorite: PropTypes.bool.isRequired,
-    done: PropTypes.bool.isRequired,
-    date: PropTypes.instanceOf(Date).isRequired,
+    content: PropTypes.string.isRequired, // Content of the todo
+    favorite: PropTypes.bool.isRequired, // Represents if todo is favorite
+    done: PropTypes.bool.isRequired, // Represents if todo have been done
+    date: PropTypes.instanceOf(Date).isRequired, // Creation date of todo
   }).isRequired,
+  // Boolean used to show actions in the all todo list
   favorite: PropTypes.bool.isRequired,
 };
 

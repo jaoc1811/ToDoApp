@@ -11,6 +11,10 @@ import '../../datePicker.css';
 import StartDateInput from '../datepicker/StartDateInput';
 import EndDateInput from '../datepicker/EndDateInput';
 
+/**
+ * Render head todos f done
+ * @param {*} props
+ */
 const TableHead = (props) => {
   const dateRange = useSelector((state) => state.dateRangeReducer);
 
@@ -78,6 +82,7 @@ const TableHead = (props) => {
 };
 
 TableHead.propTypes = {
+  // Boolean used to show actions and favorite filter only in the all todo list
   favorite: PropTypes.bool.isRequired,
 };
 

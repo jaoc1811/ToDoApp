@@ -6,14 +6,21 @@ import TableHead from './TableHead';
 import ToDo from './ToDo';
 import DoneTableHead from './DoneTableHead';
 
+/**
+ * Render favorite todo list
+ */
 const FavoriteList = () => {
   const toDoItems = useSelector((state) => state.toDoItemsReducer);
 
   const dateRange = useSelector((state) => state.dateRangeReducer);
 
+  /**
+   * Function that render a row for every favorite todo in toDoItems
+   */
   const favoriteRows = () => {
     let rows = toDoItems;
 
+    // Filter by date range
     if (dateRange.startDate !== null && dateRange.endDate !== null) {
       rows = rows
         .filter((todo) => todo.date >= dateRange.startDate && todo.date <= dateRange.endDate);
@@ -23,6 +30,9 @@ const FavoriteList = () => {
     ));
   };
 
+  /**
+   * Function that render a row for every done favorite todo in toDoItems
+   */
   const doneFavoriteRows = () => (
     toDoItems.filter((todo) => todo.done === true && todo.favorite === true).map((todo) => (
       <ToDo key={todo.content} todo={todo} favorite />
